@@ -20,6 +20,7 @@ function Form({ nodeRef }) {
   );
   const words = useSelector(typingSelectors.selectAll);
   const intervalIdRef = useRef(null);
+  const firstWordRef = useRef(null);
 
   useEffect(() => {
     const startTimer = () => {
@@ -104,6 +105,13 @@ function Form({ nodeRef }) {
     dispatch(resetStates());
     clearInterval(intervalIdRef.current);
     setText("");
+
+    firstWordRef.current = nodeRef.current.get(words[0]?.id);
+    firstWordRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "center",
+    });
   };
 
   const handleInputChange = (e) => {
