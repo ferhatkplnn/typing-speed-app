@@ -9,15 +9,13 @@ import {
   updateWord,
   resetStates,
   changeTypingStatus,
-  decreaseTimer,
 } from "../redux/typing/typingSlice";
 function Form({ nodeRef }) {
   const [text, setText] = useState("");
+  const [timer, setTimer] = useState(20);
   const dispatch = useDispatch();
 
-  const { wordIndex, typingStatus, timer } = useSelector(
-    (state) => state.typing
-  );
+  const { wordIndex, typingStatus } = useSelector((state) => state.typing);
   const words = useSelector(typingSelectors.selectAll);
   const intervalIdRef = useRef(null);
   const firstWordRef = useRef(null);
@@ -26,7 +24,7 @@ function Form({ nodeRef }) {
     const startTimer = () => {
       if (typingStatus === "starting" && timer > 0) {
         intervalIdRef.current = setInterval(() => {
-          dispatch(decreaseTimer());
+          setTimer((prev) => prev - 1);
         }, 1000);
         dispatch(changeTypingStatus("active"));
       }
@@ -105,6 +103,7 @@ function Form({ nodeRef }) {
     dispatch(resetStates());
     clearInterval(intervalIdRef.current);
     setText("");
+    setTimer(20);
 
     firstWordRef.current = nodeRef.current.get(words[0]?.id);
     firstWordRef.current?.scrollIntoView({

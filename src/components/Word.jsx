@@ -1,6 +1,12 @@
 import PropTypes from "prop-types";
+import { typingSelectors } from "../redux/typing/typingSlice";
+import { useSelector } from "react-redux";
 
-function Word({ id, word, status, nodeRef }) {
+function Word({ id, nodeRef }) {
+  const { word, status } = useSelector((state) =>
+    typingSelectors.selectById(state, id)
+  );
+
   let wordClass = "";
 
   switch (status) {
@@ -44,9 +50,9 @@ function Word({ id, word, status, nodeRef }) {
 
 Word.propTypes = {
   id: PropTypes.string.isRequired,
-  word: PropTypes.string.isRequired,
-  status: PropTypes.oneOf(["correct", "wrong", "ready", "ready-wrong", "idle"])
-    .isRequired,
+  // word: PropTypes.string.isRequired,
+  // status: PropTypes.oneOf(["correct", "wrong", "ready", "ready-wrong", "idle"])
+  // .isRequired,
   nodeRef: PropTypes.shape({
     current: PropTypes.object,
   }).isRequired,

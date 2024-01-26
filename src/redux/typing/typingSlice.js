@@ -9,7 +9,6 @@ const initialData = typingAdapter.getInitialState({
     correct: 0,
   },
   typingStatus: "ready",
-  timer: 20,
 });
 
 const initialState = typingAdapter.upsertMany(initialData, getWords());
@@ -37,9 +36,6 @@ export const typingSlice = createSlice({
     changeTypingStatus: (state, aciton) => {
       state.typingStatus = aciton.payload;
     },
-    decreaseTimer: (state) => {
-      state.timer -= 1;
-    },
   },
 });
 
@@ -54,6 +50,5 @@ export const {
   increaseCorrectCount,
   resetStates,
   changeTypingStatus,
-  decreaseTimer,
 } = typingSlice.actions;
 export default typingSlice.reducer;
